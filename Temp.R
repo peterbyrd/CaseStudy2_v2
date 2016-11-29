@@ -63,8 +63,12 @@ plot(UStemp_yearly,type="l")
 
 ### Calculate the one year difference of average land temperature
 UStemp_diff <- diff(UStemp_yearly)
-max(abs(UStemp_diff))
-### 1920 and 1921 have the biggest average difference of 2.54 degrees F
+maxdiff <- max(abs(UStemp_diff))
+maxdiffyr <- 1900 + which.max(UStemp_diff[,2])
+print(c('The max monthly temperature difference in Fahrenheit was ',maxdiff))
+print(c('It occured between the years ',maxdiffyr-1,' and ',maxdiffyr,'.'))
+### Since we measured the difference from the previous year, 1920 and 1921 have the 
+### largest average temperature difference of 2.54 degrees F
 
 #   Part III
 ### Read CityTemp data
@@ -83,7 +87,7 @@ CityTemp <- CityTemp[!(is.na(CityTemp$Monthly.AverageTemp)),]
 Date1 <- as.Date("1900-01-01")
 CityTemp1900 <- CityTemp[CityTemp$Date >= Date1,]
 
-### Find the difference between max and min monthly avg temp for each country
+### Find the difference between max and min monthly avg temp for each city
 maxcitytemp <- tapply(CityTemp1900$Monthly.AverageTemp, CityTemp1900$City, max)
 mincitytemp <- tapply(CityTemp1900$Monthly.AverageTemp, CityTemp1900$City, min)
 diffcitytemp <- maxcitytemp - mincitytemp
